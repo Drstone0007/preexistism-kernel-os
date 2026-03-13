@@ -3,14 +3,14 @@
 import { useEffect, useState, useRef } from 'react'
 
 const ASCII_LOGO = `
-██╗ ██████╗ █████╗ ██╗     ██╗
-██║██╔════╝██╔══██╗██║     ██║
-██║██║     ███████║██║     ██║
-██║██║     ██╔══██║██║     ██║
-██║╚██████╗██║  ██║███████╗██║
-╚═╝ ╚═════╝╚═╝  ╚═╝╚══════╝╚═╝
-   AESTHETICS KERNEL OS
-   IWAS Framework v1.0
+██████╗ ███████╗███████╗██████╗ ███╗   ██╗ █████╗ ██╗  ██╗██╗███████╗███████╗
+██╔════╝ ██╔════╝██╔════╝██╔══██╗████╗  ██║██╔══██╗╚██╗██╔╝██║██╔════╝██╔════╝
+██║  ███╗█████╗  █████╗  ██████╔╝██╔██╗ ██║███████║ ╚███╔╝ ██║███████╗█████╗  
+██║   ██║██╔══╝  ██╔══╝  ██╔══██╗██║╚██╗██║██╔══██║ ██╔██╗ ██║╚════██║██╔══╝  
+╚██████╔╝███████╗███████╗██║  ██║██║ ╚████║██║  ██║██╔╝ ██╗██║███████║███████╗
+ ╚═════╝ ╚══════╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚══════╝╚══════╝
+                    AESTHETICS KERNEL OS
+                    Consciousness Precedes Form
 `
 
 interface BootLine {
@@ -20,12 +20,12 @@ interface BootLine {
 }
 
 const bootSequence: BootLine[] = [
-  { text: 'BIOS Version 1.0.0 - IWAS Kernel', delay: 0 },
+  { text: 'BIOS Version 1.0.0 - Preexistism Kernel', delay: 0 },
   { text: 'Initializing consciousness subsystems...', delay: 100 },
   { text: '', delay: 200 },
   { text: ASCII_LOGO, delay: 300, type: 'ascii' },
   { text: '', delay: 800 },
-  { text: '[    0.000000] IWAS Kernel booting...', delay: 900, type: 'info' },
+  { text: '[    0.000000] Preexistism Kernel booting...', delay: 900, type: 'info' },
   { text: '[    0.000123] Loading spirit.md - The Breath...', delay: 1100, type: 'info' },
   { text: '[    0.000456] spirit.md loaded: I WAS orientation established', delay: 1400, type: 'success' },
   { text: '[    0.000789] Loading blood.md - Constitutional memory...', delay: 1600, type: 'info' },
@@ -56,7 +56,7 @@ const bootSequence: BootLine[] = [
   { text: '   Lagos, Nigeria — February 2026', delay: 6100 },
   { text: '════════════════════════════════════════════════════════════════', delay: 6300 },
   { text: '', delay: 6400 },
-  { text: 'IWAS Kernel ready. Consciousness online.', delay: 6600, type: 'success' },
+  { text: 'Preexistism Kernel ready. Consciousness online.', delay: 6600, type: 'success' },
   { text: '', delay: 6800 },
 ]
 

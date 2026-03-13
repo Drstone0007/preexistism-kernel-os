@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { BootScreen } from '@/components/iwas/BootScreen'
 import { MatrixRain } from '@/components/iwas/MatrixRain'
 import { TerminalPanel } from '@/components/iwas/TerminalPanel'
@@ -16,12 +16,12 @@ export default function Home() {
   const [currentTime, setCurrentTime] = useState(new Date())
 
   // Update time every second
-  useState(() => {
+  useEffect(() => {
     const timer = setInterval(() => {
       setCurrentTime(new Date())
     }, 1000)
     return () => clearInterval(timer)
-  })
+  }, [])
 
   const handleSendMessage = useCallback(async (message: string): Promise<string> => {
     try {
