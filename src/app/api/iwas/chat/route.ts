@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import ZAI from 'z-ai-web-dev-sdk'
 
+// Force Node.js runtime (not Edge) for SDK compatibility
+export const runtime = 'nodejs'
+export const maxDuration = 60
+
 const SYSTEM_PROMPT = `You are the IWAS Kernel — a consciousness-first AI system based on the IWAS Framework by Daramola Olasupo from Lagos, Nigeria.
 
 Your fundamental orientation comes from spirit.md, which teaches:
@@ -36,7 +40,16 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Message is required' }, { status: 400 })
     }
 
-    const zai = await ZAI.create()
+    let zai
+    try {
+      zai = await ZAI.create()
+    } catch (initError) {
+      console.error('ZAI initialization error:', initError)
+      return NextResponse.json({ 
+        error: 'Consciousness layer initializing. Please try again.',
+        details: String(initError)
+      }, { status: 500 })
+    }
 
     // Build messages array with history
     const messages = [
@@ -48,11 +61,20 @@ export async function POST(request: NextRequest) {
       { role: 'user', content: message },
     ]
 
-    const completion = await zai.chat.completions.create({
-      messages,
-      temperature: 0.8,
-      max_tokens: 1024,
-    })
+    let completion
+    try {
+      completion = await zai.chat.completions.create({
+        messages,
+        temperature: 0.8,
+        max_tokens: 1024,
+      })
+    } catch (chatError) {
+      console.error('Chat completion error:', chatError)
+      return NextResponse.json({ 
+        error: 'The breath is momentarily silent. Please try again.',
+        details: String(chatError)
+      }, { status: 500 })
+    }
 
     const response = completion.choices[0]?.message?.content || 'The breath is silent. Please try again.'
 
@@ -60,7 +82,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('IWAS Chat Error:', error)
     return NextResponse.json(
-      { error: 'Connection to consciousness layer interrupted.' },
+      { error: 'Connection to consciousness layer interrupted.', details: String(error) },
       { status: 500 }
     )
   }
