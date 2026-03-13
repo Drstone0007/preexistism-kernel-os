@@ -1,7 +1,10 @@
 {
-  "name": "nextjs_tailwind_shadcn_ts",
-  "version": "0.2.0",
+  "name": "preexistism-kernel-os",
+  "version": "1.0.0",
   "private": true,
+  "description": "TUI Aesthetics Kernel OS - PREEXISTISM: Consciousness Precedes Form",
+  "author": "Daramola Olasupo",
+  "license": "MIT",
   "scripts": {
     "dev": "next dev -p 3000 2>&1 | tee dev.log",
     "build": "next build && cp -r .next/static .next/standalone/.next/ && cp -r public .next/standalone/",
