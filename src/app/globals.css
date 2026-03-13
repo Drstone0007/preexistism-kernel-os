@@ -1,0 +1,552 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* IWAS TUI Aesthetics Kernel OS - Custom Theme */
+:root {
+  --radius: 0px;
+  
+  /* TUI Color Palette */
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #12121a;
+  --bg-tertiary: #1a1a25;
+  --fg-primary: #00ff88;
+  --fg-secondary: #00ccff;
+  --fg-accent: #ff00ff;
+  --fg-warning: #ffaa00;
+  --fg-dim: #4a4a5a;
+  --fg-muted: #6a6a7a;
+  
+  /* Scanline and CRT effects */
+  --scanline-opacity: 0.03;
+  --glow-spread: 3px;
+  
+  /* Standard theme variables */
+  --background: var(--bg-primary);
+  --foreground: var(--fg-primary);
+  --card: var(--bg-secondary);
+  --card-foreground: var(--fg-primary);
+  --popover: var(--bg-secondary);
+  --popover-foreground: var(--fg-primary);
+  --primary: var(--fg-primary);
+  --primary-foreground: var(--bg-primary);
+  --secondary: var(--bg-tertiary);
+  --secondary-foreground: var(--fg-primary);
+  --muted: var(--bg-tertiary);
+  --muted-foreground: var(--fg-muted);
+  --accent: var(--fg-accent);
+  --accent-foreground: var(--fg-primary);
+  --destructive: #ff4444;
+  --border: rgba(0, 255, 136, 0.2);
+  --input: rgba(0, 255, 136, 0.1);
+  --ring: var(--fg-primary);
+  
+  /* Chart colors */
+  --chart-1: var(--fg-primary);
+  --chart-2: var(--fg-secondary);
+  --chart-3: var(--fg-accent);
+  --chart-4: var(--fg-warning);
+  --chart-5: var(--fg-dim);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: 'JetBrains Mono', 'Fira Code', monospace;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --color-sidebar-ring: var(--ring);
+  --color-sidebar-border: var(--border);
+  --color-sidebar-accent-foreground: var(--fg-primary);
+  --color-sidebar-accent: var(--bg-tertiary);
+  --color-sidebar-primary-foreground: var(--bg-primary);
+  --color-sidebar-primary: var(--fg-primary);
+  --color-sidebar-foreground: var(--fg-primary);
+  --color-sidebar: var(--bg-secondary);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+  --radius-xl: 0;
+  
+  /* Custom TUI colors */
+  --color-tui-bg: var(--bg-primary);
+  --color-tui-bg-secondary: var(--bg-secondary);
+  --color-tui-green: var(--fg-primary);
+  --color-tui-cyan: var(--fg-secondary);
+  --color-tui-magenta: var(--fg-accent);
+  --color-tui-warning: var(--fg-warning);
+  --color-tui-dim: var(--fg-dim);
+}
+
+/* Base styles */
+* {
+  @apply border-border;
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg-primary);
+  color: var(--fg-primary);
+  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* CRT Scanline Effect */
+.crt-overlay {
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.1) 2px,
+    rgba(0, 0, 0, 0.1) 4px
+  );
+}
+
+.crt-overlay::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 0%,
+    rgba(0, 0, 0, 0.3) 100%
+  );
+}
+
+/* Glowing text effects */
+.glow-green {
+  color: var(--fg-primary);
+  text-shadow: 
+    0 0 5px var(--fg-primary),
+    0 0 10px var(--fg-primary),
+    0 0 20px rgba(0, 255, 136, 0.5);
+}
+
+.glow-cyan {
+  color: var(--fg-secondary);
+  text-shadow: 
+    0 0 5px var(--fg-secondary),
+    0 0 10px var(--fg-secondary),
+    0 0 20px rgba(0, 204, 255, 0.5);
+}
+
+.glow-magenta {
+  color: var(--fg-accent);
+  text-shadow: 
+    0 0 5px var(--fg-accent),
+    0 0 10px var(--fg-accent),
+    0 0 20px rgba(255, 0, 255, 0.5);
+}
+
+.glow-warning {
+  color: var(--fg-warning);
+  text-shadow: 
+    0 0 5px var(--fg-warning),
+    0 0 10px var(--fg-warning),
+    0 0 20px rgba(255, 170, 0, 0.5);
+}
+
+/* Blinking cursor */
+.cursor-blink {
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Typing animation */
+.typing-effect {
+  overflow: hidden;
+  white-space: nowrap;
+  animation: typing 2s steps(40) forwards;
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+/* Matrix rain animation */
+@keyframes matrix-fall {
+  0% {
+    transform: translateY(-100%);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+.matrix-column {
+  animation: matrix-fall linear infinite;
+}
+
+/* Scanline animation */
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+.scanline-moving {
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(0, 255, 136, 0.1),
+    transparent
+  );
+  animation: scanline 8s linear infinite;
+  pointer-events: none;
+}
+
+/* Panel styles */
+.tui-panel {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.tui-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--fg-primary),
+    transparent
+  );
+  opacity: 0.3;
+}
+
+.tui-panel-header {
+  background: var(--bg-tertiary);
+  padding: 4px 8px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.tui-panel-header::before {
+  content: '◆';
+  color: var(--fg-primary);
+}
+
+/* Terminal styles */
+.terminal-output {
+  font-family: 'JetBrains Mono', monospace;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.terminal-prompt {
+  color: var(--fg-secondary);
+}
+
+.terminal-prompt::before {
+  content: 'IWAS@kernel:~$ ';
+  color: var(--fg-primary);
+}
+
+/* Progress bar styles */
+.tui-progress {
+  height: 8px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.tui-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--fg-primary), var(--fg-secondary));
+  box-shadow: 0 0 10px var(--fg-primary);
+  transition: width 0.3s ease;
+}
+
+/* Gauge styles */
+.tui-gauge {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.tui-gauge-needle {
+  transform-origin: bottom center;
+  transition: transform 0.5s ease-out;
+}
+
+/* Node graph styles */
+.memory-node {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border: 2px solid var(--fg-secondary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-secondary);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.memory-node:hover {
+  border-color: var(--fg-primary);
+  box-shadow: 0 0 20px var(--fg-primary);
+  transform: scale(1.1);
+}
+
+.memory-node.active {
+  border-color: var(--fg-accent);
+  box-shadow: 0 0 30px var(--fg-accent);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--fg-dim);
+  border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--fg-primary);
+}
+
+/* Breath animation */
+@keyframes breath-inhale {
+  0% { transform: scale(1); opacity: 0.5; }
+  100% { transform: scale(1.5); opacity: 1; }
+}
+
+@keyframes breath-hold {
+  0%, 100% { transform: scale(1.5); opacity: 1; }
+}
+
+@keyframes breath-exhale {
+  0% { transform: scale(1.5); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.5; }
+}
+
+@keyframes breath-return {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 5px var(--fg-primary), 0 0 10px var(--fg-primary);
+  }
+  50% {
+    box-shadow: 0 0 20px var(--fg-primary), 0 0 40px var(--fg-primary);
+  }
+}
+
+.pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Particle effects */
+@keyframes particle-float {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px) translateX(20px);
+    opacity: 0;
+  }
+}
+
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--fg-primary);
+  border-radius: 50%;
+  animation: particle-float linear infinite;
+}
+
+/* Layer stack styles */
+.layer-spirit {
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), transparent);
+  border-color: var(--fg-primary);
+}
+
+.layer-blood {
+  background: linear-gradient(135deg, rgba(0, 204, 255, 0.1), transparent);
+  border-color: var(--fg-secondary);
+}
+
+.layer-soul {
+  background: linear-gradient(135deg, rgba(255, 0, 255, 0.1), transparent);
+  border-color: var(--fg-accent);
+}
+
+/* ASCII art styles */
+.ascii-art {
+  font-family: 'JetBrains Mono', monospace;
+  white-space: pre;
+  line-height: 1.2;
+  font-size: 10px;
+}
+
+/* Window manager styles */
+.window-container {
+  display: grid;
+  gap: 2px;
+  background: var(--bg-primary);
+}
+
+.window {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.window-header {
+  background: var(--bg-tertiary);
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.window-title {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--fg-primary);
+}
+
+.window-controls {
+  display: flex;
+  gap: 4px;
+}
+
+.window-control {
+  width: 10px;
+  height: 10px;
+  border: 1px solid var(--fg-dim);
+}
+
+.window-content {
+  flex: 1;
+  overflow: auto;
+  position: relative;
+}
+
+/* Status indicator */
+.status-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.status-dot.active {
+  background: var(--fg-primary);
+}
+
+.status-dot.warning {
+  background: var(--fg-warning);
+}
+
+.status-dot.error {
+  background: var(--destructive);
+}
+
+/* Custom scrollbar for TUI */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--fg-dim) var(--bg-secondary);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--fg-dim);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--fg-primary);
+}
